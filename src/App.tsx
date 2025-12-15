@@ -1,4 +1,4 @@
-import { Authenticated, GitHubBanner, Refine } from "@refinedev/core";
+import { WelcomePage,Authenticated, GitHubBanner, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
@@ -10,10 +10,9 @@ import {
 } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
-import dataProvider, {
-  GraphQLClient,
-  liveProvider,
-} from "@refinedev/nestjs-query";
+import {dataProvider, liveProvider, authProvider} from "./providers";
+import { Home, Login, Register, ForgotPassword} from "./pages";
+
 import routerProvider, {
   CatchAllNavigate,
   DocumentTitleHandler,
@@ -32,11 +31,11 @@ function App() {
           <AntdApp>
             <DevtoolsProvider>
               <Refine
-                //dataProvider={dataProvider(gqlClient)}
-                //liveProvider={liveProvider(wsClient)}
+                dataProvider={dataProvider}
+                liveProvider={liveProvider}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerProvider}
-                //authProvider={authProvider}
+                authProvider={authProvider}
                 
                 options={{
                   syncWithLocation: true,
@@ -46,49 +45,11 @@ function App() {
                 }}
               >
                 <Routes>
-                  <Route
-                    element={
-                      <Authenticated
-                        key="authenticated-inner"
-                        fallback={<CatchAllNavigate to="/login" />}
-                      >
-                        <ThemedLayout
-                          //Header={Header}
-                          Sider={(props) => <ThemedSider {...props} fixed />}
-                        >
-                          <Outlet />
-                        </ThemedLayout>
-                      </Authenticated>
-                    }
-                  >
-                    <Route
-                      index
-                      element={<NavigateToResource resource="blog_posts" />}
-                    />
-                    <Route path="/blog-posts">
-                      
-                    </Route>
-                    <Route path="/categories">
-                      
-                    </Route>
-                    <Route path="*" element={<ErrorComponent />} />
-                  </Route>
-                  <Route
-                    element={
-                      <Authenticated
-                        key="authenticated-outer"
-                        fallback={<Outlet />}
-                      >
-                        <NavigateToResource />
-                      </Authenticated>
-                    }
-                  >
-                    
-                    <Route
-                      path="/forgot-password"
-                      //element={<ForgotPassword />}
-                    />
-                  </Route>
+                  <Route index element = {<WelcomePage />} />
+                  <Route index element = {<Home />} />
+                  <Route path="/register" element = {<Register />} />
+                  <Route path="/login" element = {<Login />} />
+                  <Route path="/forgot-password" element = {<ForgotPassword />} />
                 </Routes>
 
                 <RefineKbar />
