@@ -2,26 +2,19 @@ import { WelcomePage,Authenticated, GitHubBanner, Refine } from "@refinedev/core
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
-import {
-  ErrorComponent,
-  ThemedLayout,
-  ThemedSider,
-  useNotificationProvider,
-} from "@refinedev/antd";
+import {useNotificationProvider} from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
 import {dataProvider, liveProvider, authProvider} from "./providers";
 import { Home, Login, Register, ForgotPassword} from "./pages";
 
 import routerProvider, {
-  CatchAllNavigate,
   DocumentTitleHandler,
-  NavigateToResource,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
 import { App as AntdApp } from "antd";
-import { createClient } from "graphql-ws";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router";
+
+import { BrowserRouter, Route, Routes } from "react-router";
 
 function App() {
   return (

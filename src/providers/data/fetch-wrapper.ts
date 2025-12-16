@@ -47,7 +47,7 @@ Error | null => {
 export const fetchWrapper =  async(url: string, options: RequestInit) => {
     const response = await customFetch(url,options);
     const responseClone = response.clone();
-    const body = await responseClone.json();
+    const body = await responseClone.json(); // If body of response is read it cannot be read again, so we clone the response
 
     const error = getGraphQLErrors(body);
     if(error){
